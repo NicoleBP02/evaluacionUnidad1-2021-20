@@ -6,7 +6,8 @@
 
 //leer el path de los archivos de entrada y de salida
 int main(int argc, char *argv[]){
-
+    //El programa se debe ejecutar en la línea de comandos así:
+    //./main pathInFileName pathOutFileName
     FILE *inFile = NULL; 
     FILE *outFile = NULL;
     for(int i = 0; i < argc; i++){
@@ -26,18 +27,17 @@ int main(int argc, char *argv[]){
         }
     }
 
-    char buffer[64];
-    char *status =  NULL;
-
-    do{
-        status = fgets(buffer, sizeof(buffer),inFile);
-        if(status != NULL){
-            printf("%s",buffer);
-        }
-    }while (status !=NULL);
-    printf("\n");
-
-    fclose(inFile);
-
+    //Feature1 
+    int data = 0;
+    int lfcount = 0;
+    while((data = fgetc(inFile)) != EOF){
+        if(data == 10) lfcount++; //el código ASCII para nueva linea es 10
+        printf("%d\n", data);
+        if(lfcount < 1){ //copia solo la primera linea en outFile
+            fputc (data, outFile);
+        } 
+        else break; 
+    }
+    
     return EXIT_SUCCESS;
 }
