@@ -28,15 +28,15 @@ int main(int argc, char *argv[]){
             return(EXIT_FAILURE);
             }
         }
-    }
-
+    } 
     Feature1(inFile, outFile);
     Feature2(inFile, outFile);
 
     return EXIT_SUCCESS;
 }
 void Feature1(FILE *inFile, FILE *outFile){
-    //Feature1 
+    //Feature1: lee la primer línea del archivo de entrada y 
+    //la escribe en la primer línea del archivo de salida.
     uint8_t data = 0;
     uint8_t lfcount = 0;
     while((data = fgetc(inFile)) != EOF){
@@ -48,25 +48,41 @@ void Feature1(FILE *inFile, FILE *outFile){
     }
 }
 int Feature2(FILE *inFile, FILE *outFile){
-    //Feature2
-    char *buffer = create_array(160); //reserva espacio en mem din para un arreglo 
+    //Feature2: lee la segunda línea del archivo de entrada, invierte su orden 
+    //y la escribe en la segunda línea del archivo de salida.
+
+    //reservo espacio en mem para buffer que contendrá data
+    char *buffer = create_array(40); //160 lo que podía pesar una línea llena
     if(buffer == NULL) return EXIT_FAILURE;
 
-    uint8_t data2 = 0;
-    uint8_t lfcount2 = 0;
-    uint8_t i = 0;
-    while((data2 = fgetc(inFile)) != EOF){
+    buffer[0] = 10; //enter... para que comienze en la 2da línea
+    uint8_t data = 0;
+    uint8_t lfcount = 0;
+    uint8_t i = 1;
+    while((data = fgetc(inFile)) != EOF){
+        if(data == 10) lfcount++; 
+        if(lfcount >= 1) break;
+        buffer[i] = data;
         i++;
-        if(data2 == 10) lfcount2++; 
-        if(lfcount2 == 1){ //copia la segunda linea en outFile
-            buffer[i] = data2;
-        } 
-        if(lfcount2 > 1) break;
     }
-    for(uint8_t i = 0; i < 10; i++){
-        printf("buffer[%d]: %d\n",i, buffer[i]);
+    //cuento la cantidad de chars para crear otro arreglo 
+    uint8_t cont = 0;
+    for(uint8_t i = 0;i<sizeof(buffer);i++){
+        if(buffer[i] == 0) break;
+        cont++;
     }
+    //creo un arreglo (que es buffer invertido) y lo escribo en file de salida
+    char *invertido = create_array(cont);
+    invertido[0]= 10;
+    for(uint8_t i = 0;i<cont;i++){
+        if(i != 0){
+            invertido[i] = buffer[cont-i];
+        }
+        fputc (invertido[i], outFile);
+    }
+
     destroy_array(buffer);
+    destroy_array(invertido);
     return EXIT_SUCCESS;
 }
 char *create_array(int size){
