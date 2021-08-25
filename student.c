@@ -33,6 +33,7 @@ int feature2(FILE *inFile, FILE *outFile){
     uint8_t data = 0;
     uint8_t lfcount = 0;
     uint8_t j = 1;
+    fgets(buffer, sizeof(buffer), inFile);
     while((data = fgetc(inFile)) != EOF){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break;
@@ -66,27 +67,38 @@ int feature3(FILE *inFile, FILE *outFile){
     while((data = fgetc(inFile)) != EOF){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break; 
-        nums[i] = data;
+        nums[i] = data-48;
         //printf("nums[%d]: %d\n",i,nums[i]);
         i++;
     }
+    char *aux = create_array(size);
+    uint8_t k = 0;
     for(uint8_t j = 0; j < i;j++){
-        nums[j]-=48;
-        printf("nums[%d]: %d\n", j, nums[j]);
+        if(nums[j]>-16){
+            if(nums[j]==-3){
+                nums[j+1] = nums[j+1]*(-1);
+                if(nums[j+2]!=-16){
+                   nums[j+2] = (nums[j+1]*-10) + nums[j+2]; 
+                   aux[k] = nums[j+2]*-1;
+                   j+=2;
+                }
+                else aux[k] = nums[j+1];
+            }
+            else aux[k] = nums[j];
+            if(nums[j+1]!=-16) nums[j+1] += nums[j]*10;
+        }
+        else k++;
     }
     uint8_t suma = 0;
     for(uint8_t j = 0; j < i;j++){
-        if(nums[j] > -4 && nums[j]!=-2 && nums[j]!=-1){
-           if(nums[j]==-3){
-               nums[j+1]*=-1;
-           }
-           else suma+=nums[j];
-           printf("num[%d]:%d\n",j,nums[j]);
-        }
-        //printf("suma: %d\n",suma);
+        //printf("aux[%d]: %d\n", j, aux[j]);
+        suma+=aux[j];
     }
-    //printf("suma: %d\n",suma);
+    //hallar digitos de suma y transformarlos en ASCII
+    fputc (suma, outFile);
+
     destroy_array(nums);
+    destroy_array(aux);
     return EXIT_SUCCESS;
 }
 char *create_array(int size){
