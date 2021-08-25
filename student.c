@@ -67,12 +67,25 @@ int feature3(FILE *inFile, FILE *outFile){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break; 
         nums[i] = data;
-        printf("nums[%d]: %d\n",i,nums[i]);
+        //printf("nums[%d]: %d\n",i,nums[i]);
         i++;
     }
-    for(uint8_t i = 0; i < size/4;i++){
-        //printf("nums[%d]: %d\n",i,nums[i]);
+    for(uint8_t j = 0; j < i;j++){
+        nums[j]-=48;
+        printf("nums[%d]: %d\n", j, nums[j]);
     }
+    uint8_t suma = 0;
+    for(uint8_t j = 0; j < i;j++){
+        if(nums[j] > -4 && nums[j]!=-2 && nums[j]!=-1){
+           if(nums[j]==-3){
+               nums[j+1]*=-1;
+           }
+           else suma+=nums[j];
+           printf("num[%d]:%d\n",j,nums[j]);
+        }
+        //printf("suma: %d\n",suma);
+    }
+    //printf("suma: %d\n",suma);
     destroy_array(nums);
     return EXIT_SUCCESS;
 }
