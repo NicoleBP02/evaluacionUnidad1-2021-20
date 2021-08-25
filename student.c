@@ -22,7 +22,7 @@ void feature1(FILE *inFile, FILE *outFile){
     }
 }
 int feature2(FILE *inFile, FILE *outFile){
-    //Feature2: lee la segunda línea del archivo de entrada, invierte su orden 
+     //Feature2: lee la segunda línea del archivo de entrada, invierte su orden 
     //y la escribe en la segunda línea del archivo de salida.
 
     //reservo espacio en mem para buffer que contendrá data
@@ -33,7 +33,6 @@ int feature2(FILE *inFile, FILE *outFile){
     uint8_t data = 0;
     uint8_t lfcount = 0;
     uint8_t j = 1;
-    fgets(buffer, sizeof(buffer), inFile);
     while((data = fgetc(inFile)) != EOF){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break;
