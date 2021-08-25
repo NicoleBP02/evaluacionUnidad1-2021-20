@@ -93,9 +93,16 @@ int feature3(FILE *inFile, FILE *outFile){
     for(uint8_t j = 0; j < i;j++){
         //printf("aux[%d]: %d\n", j, aux[j]);
         suma+=aux[j];
+        aux[j] = 0;
     }
     //hallar digitos de suma y transformarlos en ASCII
-    fputc (suma, outFile);
+    aux[0] = 10;
+    aux[1] = (suma/10)+48; //1er digito
+    aux[2] = (suma%10)+48; //2do digito
+
+    for(uint8_t j=0;j<3;j++){
+         fputc (aux[j], outFile);
+    }
 
     destroy_array(nums);
     destroy_array(aux);
