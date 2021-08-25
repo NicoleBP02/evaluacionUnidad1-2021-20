@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
     feature1(inFile, outFile);
     feature2(inFile, outFile);
-    //feature3(inFile, outFile);
+    feature3(inFile, outFile);
 
     return EXIT_SUCCESS;
 }
