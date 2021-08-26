@@ -5,6 +5,7 @@
 void feature1(FILE *inFile, FILE *outFile);
 int feature2(FILE *inFile, FILE *outFile);
 int feature3(FILE *inFile, FILE *outFile);
+void feature4(FILE *inFile, int **parr, int *length, char **op);
 char *create_array(int);
 void destroy_array(char *);
 
@@ -106,6 +107,28 @@ int feature3(FILE *inFile, FILE *outFile){
     destroy_array(nums);
     destroy_array(aux);
     return EXIT_SUCCESS;
+}
+void feature4(FILE *inFile, int **parr, int *length, char **op){
+    //feature4: lee el arreglo de enteros de la cuarta línea del archivo de entrada 
+    //así como la operación especificada luego del arreglo, separada por un espacio.
+    //int len = *length;
+    int len = 256;
+    char *arr = create_array(len); //arreglo temporal para leer el file
+
+    uint8_t data = 0;
+    uint8_t lfcount = 0;
+    uint8_t i = 0;
+    while((data = fgetc(inFile)) != EOF){
+        if(data == 10) lfcount++; 
+        if(lfcount >= 1) break; 
+        arr[i] = data;
+        i++;
+    }
+    
+    for(uint8_t j=0;j<i;j++){
+        printf("aux[%d]: %d\n",j,arr[j]);
+    }
+    destroy_array(arr);
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
