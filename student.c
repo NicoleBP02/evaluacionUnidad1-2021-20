@@ -71,7 +71,7 @@ int feature3(FILE *inFile, FILE *outFile){
         //printf("nums[%d]: %d\n",i,nums[i]);
         i++;
     }
-    char *aux = create_array(size);
+    signed char *aux = create_array(size);
     uint8_t k = 0;
     for(uint8_t j = 0; j < i;j++){
         if(nums[j]>-16){
@@ -89,13 +89,14 @@ int feature3(FILE *inFile, FILE *outFile){
         }
         else k++;
     }
-    uint8_t suma = 0;
+    signed int suma = 0;
     for(uint8_t j = 0; j < i;j++){
-        //printf("aux[%d]: %d\n", j, aux[j]);
+        //printf("%d + %d = ", aux[j], suma);
         suma+=aux[j];
+        //printf(" suma = %d\n",suma);
         aux[j] = 0;
     }
-    //SOLO IMPRIMIRÁ AQUELLAS SUMAS CUYOS NUMEROS NO SUPEREN LOS 3 DÍGITOS
+    //SOLO PASARÁ AL FILE AQUELLAS SUMAS CUYOS NUMEROS NO SUPEREN LOS 3 DÍGITOS
     if(suma > 0){ //si la suma es positiva
         if(suma>-1&&suma<10){ //1 dígito
             aux[0] = 10;
@@ -118,7 +119,7 @@ int feature3(FILE *inFile, FILE *outFile){
             aux[1] = (suma/100)+48;
             aux[2] = ((suma%100)/10)+48;
             aux[3] = ((suma%100)%10)+48;
-            for(uint8_t j=0;j<3;j++){
+            for(uint8_t j=0;j<4;j++){
                 fputc (aux[j], outFile);
             }
         }
@@ -139,7 +140,7 @@ int feature3(FILE *inFile, FILE *outFile){
             aux[1] =-3;
             aux[2] = (suma/10)+48; //1er digito
             aux[3] = (suma%10)+48; //2do digito
-            for(uint8_t j=0;j<3;j++){
+            for(uint8_t j=0;j<4;j++){
                 fputc (aux[j], outFile);
             }
         }
@@ -149,7 +150,7 @@ int feature3(FILE *inFile, FILE *outFile){
             aux[2] = (suma/100)+48;
             aux[3] = ((suma%100)/10)+48;
             aux[4] = ((suma%100)%10)+48;
-            for(uint8_t j=0;j<3;j++){
+            for(uint8_t j=0;j<5;j++){
                 fputc (aux[j], outFile);
             }
         }
@@ -162,8 +163,8 @@ int feature3(FILE *inFile, FILE *outFile){
 void feature4(FILE *inFile, int **parr, int *length, char **op){
     //feature4: lee el arreglo de enteros de la cuarta línea del archivo de entrada 
     //así como la operación especificada luego del arreglo, separada por un espacio.
-    int len = 256;
-    char *arr = create_array(len); //arreglo temporal para leer el file
+    int size = 256;
+    char *arr = create_array(size); //arreglo temporal para leer el file
 
     uint8_t data = 0;
     uint8_t lfcount = 0;
@@ -174,30 +175,39 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
         arr[i] = data; //lleno el arreglo temporal con los chars de la línea
         i++;
     }
+    // PARA ENCONTRAR OP
     char *opp = create_array(8);
     char aux;
     uint8_t k=0;
+    uint8_t tam = 0; //variable para calcular el tamaño del arreglo op
     for(uint8_t j=i;j>0;j--){
         if(arr[j]==32) break;
-        if(arr[j] > 31 && arr[j] < 255 && arr[j] != 127 || arr[j] == 0){
+        if(arr[j] > 31 && arr[j] < 255 && arr[j] != 127){
             aux = arr[j];
             opp[k] = aux;
             printf("opp[%d]: %d  arr[%d]: %d\n",k,opp[k],j,arr[j]);
             arr[j] = 32;
             k++;
+            tam++;
         }
     }
-    printf("\n");
-    for(uint8_t j=0;j<sizeof(opp);j++){
-        printf("opp[%d]: %d\n",j,opp[j]);
+    char *temp = create_array(tam+1); //arreglo temporal que contendrá exactamente lo que tendrá op
+    for(uint8_t j=0;j<tam;j++){
+        temp[j] = opp[j];
+        printf("temp[%d]: %d\n",j,temp[j]);
     }
+    *op = temp; //IMPORTANTE, YA EN LA DIRECCIÓN DE OP SE GUARDÓ EL ARREGLO
 
+    //PARA ECNONTRAR PARR Y LEN
+
+    
     //al final, cuando necesite que los parámetros queden en el heap debo hacer lo sig:
     //  *len = 256;
     //  char *ope = create_array(8);
     //  *op = ope;
     destroy_array(arr);
     destroy_array(opp);
+    destroy_array(temp);
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );

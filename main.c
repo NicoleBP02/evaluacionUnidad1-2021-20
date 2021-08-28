@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
     int len = 0; 
     int *arr = NULL;
     char *op = NULL;
-    //feature4(inFile, &arr, &len, &op);
+    feature4(inFile, &arr, &len, &op);
 
     return EXIT_SUCCESS;
 }
