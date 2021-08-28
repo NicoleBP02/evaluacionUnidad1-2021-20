@@ -6,6 +6,7 @@ void feature1(FILE *inFile, FILE *outFile);
 int feature2(FILE *inFile, FILE *outFile);
 int feature3(FILE *inFile, FILE *outFile);
 void feature4(FILE *inFile, int **parr, int *length, char **op);
+void feature5(FILE *fout, int *parr, int length, char *op);
 char *create_array(int);
 int *create_intarray(int size);
 void destroy_array(char *);
@@ -53,7 +54,6 @@ int feature2(FILE *inFile, FILE *outFile){
         }
         fputc (invertido[i], outFile);
     }
-
     destroy_array(buffer);
     destroy_array(invertido);
     return EXIT_SUCCESS;
@@ -83,83 +83,19 @@ int feature3(FILE *inFile, FILE *outFile){
                    nums[j+2] = (nums[j+1]*-10) + nums[j+2]; 
                    aux[k] = nums[j+2]*-1;
                    j+=2;
-                }
-                else aux[k] = nums[j+1];
+                } else aux[k] = nums[j+1];
             }
             else aux[k] = nums[j];
             if(nums[j+1]!=-16) nums[j+1] += nums[j]*10;
-        }
-        else k++;
+        } else k++;
     }
-     /*for(uint8_t j = 0; j < i;j++){
-        printf("aux[%d]: %d\n ",j,aux[j]);
-    }*/
     signed int suma = 0;
     for(uint8_t j = 0; j < i;j++){
-        //printf("%d + %d = ", aux[j], suma);
         suma+=aux[j];
-        //printf(" suma = %d\n",suma);
         aux[j] = 0;
     }
-    //SOLO PASARÁ AL FILE AQUELLAS SUMAS CUYOS NUMEROS NO SUPEREN LOS 3 DÍGITOS
-    if(suma > 0){ //si la suma es positiva
-        if(suma>-1&&suma<10){ //1 dígito
-            aux[0] = 10;
-            aux[1] = suma+48;
-            for(uint8_t j=0;j<3;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-        if(suma>9&&suma<100){ //2 dígitos
-            //hallar digitos de suma y transformarlos en ASCII
-            aux[0] = 10;
-            aux[1] = (suma/10)+48; //1er digito
-            aux[2] = (suma%10)+48; //2do digito
-            for(uint8_t j=0;j<3;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-        else{ //3 dígitos
-            aux[0] = 10;
-            aux[1] = (suma/100)+48;
-            aux[2] = ((suma%100)/10)+48;
-            aux[3] = ((suma%100)%10)+48;
-            for(uint8_t j=0;j<4;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-    }
-    else{ //si la suma es negativa
-        suma*=-1;
-        if(suma>-1&&suma<10){ //1 dígito
-            aux[0] = 10;
-            aux[1]= -3;
-            aux[2] = suma+48;
-            for(uint8_t j=0;j<3;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-        if(suma>9&&suma<100){ //2 dígitos
-            //hallar digitos de suma y transformarlos en ASCII
-            aux[0] = 10;
-            aux[1] =-3;
-            aux[2] = (suma/10)+48; //1er digito
-            aux[3] = (suma%10)+48; //2do digito
-            for(uint8_t j=0;j<4;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-        else{ //3 dígitos
-            aux[0] = 10;
-            aux[1] = -3;
-            aux[2] = (suma/100)+48;
-            aux[3] = ((suma%100)/10)+48;
-            aux[4] = ((suma%100)%10)+48;
-            for(uint8_t j=0;j<5;j++){
-                fputc (aux[j], outFile);
-            }
-        }
-    }
+    fprintf(outFile, "\n");
+    fprintf(outFile, "%d",suma);
     destroy_array(nums);
     destroy_array(aux);
     return EXIT_SUCCESS;
@@ -220,11 +156,9 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
                     arr[n] = buffer[j+1]; //si es de un dígito
                     n--;
                 } 
-            }
-            else arr[n] = buffer[j]; //si es positivo
+            }else arr[n] = buffer[j]; //si es positivo
             if(buffer[j+1]!=-16) buffer[j+1] += buffer[j]*10; //si es positivo de dos digitos
-        }
-        else n++;
+        } else n++;
     }
     uint8_t cont = 0;
     for(uint8_t j=0;j<size_buffer-1;j++){ //ciclo para conocer len
@@ -238,13 +172,29 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
     }
 
     //  IMPORTANTE!!!! 
-    *length = cont;
-    printf("%d\n",*length); //this works
+    
+    *length = cont; //this works
     *op = temp; //this doesn't
-    //*parr = temp2; 
+    *parr = temp2; //this doesn't
+    printf("length: %d\n", *length);
     for(uint8_t j=0;j<k;j++){
-        printf("op[%d]: %d\n",j,*op[j]);
+        printf("op[%d]: %d\n",j,op[j]);
     }
+    printf("\n");
+    for(uint8_t j=0;j<cont;j++){
+        printf("parr[%d]: %d\n",j,parr[j]);
+    }
+
+    /*printf("*length: %d\n\n",*length); 
+    for(uint8_t j=0;j<k;j++){
+        printf("op[%d]: %d  temp[%d]: %d\n",j,*op[j],j,temp[j]);
+    }
+
+    //printf("\n");
+    //*parr = temp2;
+    for(uint8_t j=0;j<cont;j++){
+        //printf("parr[%d]: %d  temp2[%d]: %d\n",j,*parr[j],j,temp2[j]);
+    } */
 
     //al final, cuando necesite que los parámetros queden en el heap debo hacer lo sig:
     //  *len = 256;
@@ -255,6 +205,15 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
     destroy_array(opp);
     destroy_array(temp);
     destroy_intarray(temp2);
+}
+void feature5(FILE *fout, int *parr, int length, char *op){
+    //feature5: recibe la dirección del arreglo y de la operación leída en la feature anterior 
+    //realiza la operación y guarda el resultado en la cuarta línea del archivo de salida. 
+    //La operación puede ser avg, max, min correspondientes al promedio, máximo o mínimo. 
+    //TODOS los resultados deben ser ENTEROS, NO en punto flotante.
+
+
+
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );

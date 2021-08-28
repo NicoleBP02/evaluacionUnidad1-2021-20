@@ -34,11 +34,11 @@ int main(int argc, char *argv[]){
     char *op = NULL;
     feature4(inFile, &parr, &len, &op);
     //printf("len: %d\n", len);
-    //printf("sizeof(op): %d\n", sizeof(op));
+    for(uint8_t j=0;j<sizeof(op);j++){
+        //printf("op[%d]: %s\n",j,op);
+    }
     for(uint8_t j=0;j<len;j++){
         //printf("parr[%d]: %d\n",j,parr[j]);
     }
-    
-
     return EXIT_SUCCESS;
 }
