@@ -30,9 +30,15 @@ int main(int argc, char *argv[]){
     feature2(inFile, outFile);
     feature3(inFile, outFile);  
     int len = 0; 
-    int *arr = NULL;
+    int *parr = NULL;
     char *op = NULL;
-    feature4(inFile, &arr, &len, &op);
+    feature4(inFile, &parr, &len, &op);
+    //printf("len: %d\n", len);
+    //printf("sizeof(op): %d\n", sizeof(op));
+    for(uint8_t j=0;j<len;j++){
+        //printf("parr[%d]: %d\n",j,parr[j]);
+    }
+    
 
     return EXIT_SUCCESS;
 }
