@@ -167,9 +167,8 @@ int feature3(FILE *inFile, FILE *outFile){
 void feature4(FILE *inFile, int **parr, int *length, char **op){
     //feature4: lee el arreglo de enteros de la cuarta línea del archivo de entrada 
     //así como la operación especificada luego del arreglo, separada por un espacio.
-    int size = 256;
-    char *buffer = create_array(size); //para guardar el contenido de la 4ta linea
-
+    int size_buffer = 256;
+    char *buffer = create_array(size_buffer); //para guardar el contenido de la 4ta linea
     uint8_t data = 0;
     uint8_t lfcount = 0;
     uint8_t i = 0;
@@ -180,10 +179,11 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
         i++;
     }
     // PARA ENCONTRAR OP
-    char *opp = create_array(8);
+    uint8_t size_opp = 8;
+    char *opp = create_array(size_opp);
+    for(uint8_t j=0;j<size_opp;j++) opp[j] = 0;
     char aux;
     uint8_t k=0;
-    uint8_t tam = 0; //variable para calcular el tamaño del arreglo op
     for(uint8_t j=i;j>0;j--){
         if(buffer[j]==32) break;
         if(buffer[j] > 31 && buffer[j] < 255 && buffer[j] != 127){
@@ -192,20 +192,22 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
             //printf("opp[%d]: %d  buffer[%d]: %d\n",k,opp[k],j,buffer[j]);
             buffer[j] = 0;
             k++;
-            tam++;
         }
     }
-    char *temp = create_array(tam+1); //arreglo temporal que contendrá lo que tendrá op
-    temp[tam] = 0;
-    for(uint8_t j=0;j<tam;j++){
-        temp[j] = opp[j]; //OP
+    char *temp = create_array(k); //arreglo temporal que contendrá lo que tendrá op
+    for(uint8_t j=0;j<k;j++) temp[j] = 0; //lleno todo de ceros para evitar nums raros al final
+    uint8_t inv = k-1;
+    for(uint8_t j=0;j<k;j++){
+        temp[inv] = opp[j]; //OP 
+        //printf("temp[%d]: %d\n",inv,temp[inv]);
+        inv--;
     }
     //PARA ENCONTRAR PARR Y LEN
     uint8_t n = 0;
-    signed char *arr = create_array(sizeof(buffer)*4);
-    for(uint8_t j=0;j<sizeof(buffer)*4;j++) buffer[j] -= 48; //paso los numeros de ASCII a decimal 
-    for(uint8_t j=0;j<sizeof(buffer)*4;j++) arr[j] = 0; //lleno todo de ceros para evitar nums raros al final
-    for(uint8_t j=0;j<sizeof(buffer)*4;j++){
+    signed char *arr = create_array(size_buffer);
+    for(uint8_t j=0;j<size_buffer-1;j++) buffer[j] -= 48; //paso los numeros de ASCII a decimal 
+    for(uint8_t j=0;j<size_buffer-1;j++) arr[j] = 0; //lleno todo de ceros para evitar nums raros al final
+    for(uint8_t j=0;j<size_buffer-1;j++){
         if(buffer[j]>-16){
             if(buffer[j]==-3){ //si es negativo
                 buffer[j+1] = buffer[j+1]*(-1);
@@ -225,27 +227,30 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
         else n++;
     }
     uint8_t cont = 0;
-    for(uint8_t j=0;j<sizeof(arr)*4;j++){ //ciclo para conocer len
+    for(uint8_t j=0;j<size_buffer-1;j++){ //ciclo para conocer len
         if(arr[j] == 0) break;
         cont++; //LEN
     }
     int *temp2 = create_intarray(cont); //PARR
     for(uint8_t j=0;j<cont;j++){
         temp2[j] = (int)arr[j];
-        printf("temp[%d]: %d\n",j,temp2[j]);
+        //printf("temp[%d]: %d\n",j,temp2[j]);
     }
-    printf("\n");
-    *op = temp;
+
+    //  IMPORTANTE!!!! 
     *length = cont;
-    parr = &temp2; 
-    for(uint8_t j=0;j<cont;j++){
-        printf("parr[%d]: %d\n",j,*parr[j]);
+    printf("%d\n",*length); //this works
+    *op = temp; //this doesn't
+    //*parr = temp2; 
+    for(uint8_t j=0;j<k;j++){
+        printf("op[%d]: %d\n",j,*op[j]);
     }
 
     //al final, cuando necesite que los parámetros queden en el heap debo hacer lo sig:
     //  *len = 256;
     //  char *ope = create_array(8);
     //  *op = ope;
+    
     destroy_array(buffer);
     destroy_array(opp);
     destroy_array(temp);
