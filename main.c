@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include "student.h"
 
 //leer el path de los archivos de entrada y de salida
@@ -34,11 +35,7 @@ int main(int argc, char *argv[]){
     char *op = NULL;
     feature4(inFile, &parr, &len, &op);
     //printf("len: %d\n", len);
-    for(uint8_t j=0;j<sizeof(op);j++){
-        //printf("op[%d]: %s\n",j,op);
-    }
-    for(uint8_t j=0;j<len;j++){
-        //printf("parr[%d]: %d\n",j,parr[j]);
-    }
+    //for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
+    //for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);
     return EXIT_SUCCESS;
 }

@@ -176,13 +176,14 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
     *length = cont; //this works
     *op = temp; //this doesn't
     *parr = temp2; //this doesn't
-    printf("length: %d\n", *length);
+
+    //printf("length: %d\n", *length);
     for(uint8_t j=0;j<k;j++){
-        printf("op[%d]: %d\n",j,op[j]);
+        //printf("op[%d]: %c\n",j,*(*op+j));
     }
     printf("\n");
     for(uint8_t j=0;j<cont;j++){
-        printf("parr[%d]: %d\n",j,parr[j]);
+        //printf("parr[%d]: %d\n",j,*(*parr+j));
     }
 
     /*printf("*length: %d\n\n",*length); 
@@ -202,9 +203,6 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
     //  *op = ope;
     
     destroy_array(buffer);
-    destroy_array(opp);
-    destroy_array(temp);
-    destroy_intarray(temp2);
 }
 void feature5(FILE *fout, int *parr, int length, char *op){
     //feature5: recibe la dirección del arreglo y de la operación leída en la feature anterior 
