@@ -151,7 +151,6 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
         if(arr[j] == 0) break;
         cont++; //LEN
     }
-    printf("cont: %d\n", cont);
     int *temp2 = create_intarray(cont); //PARR
     for(uint8_t j=0;j<cont;j++){
         temp2[j] = (int)arr[j];
@@ -164,31 +163,6 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
     *op = temp; //this doesn't
     *parr = temp2; //this doesn't
 
-    //printf("length: %d\n", *length);
-    for(uint8_t j=0;j<k;j++){
-        //printf("op[%d]: %c\n",j,*(*op+j));
-    }
-    printf("\n");
-    for(uint8_t j=0;j<cont;j++){
-        //printf("parr[%d]: %d\n",j,*(*parr+j));
-    }
-
-    /*printf("*length: %d\n\n",*length); 
-    for(uint8_t j=0;j<k;j++){
-        printf("op[%d]: %d  temp[%d]: %d\n",j,*op[j],j,temp[j]);
-    }
-
-    //printf("\n");
-    //*parr = temp2;
-    for(uint8_t j=0;j<cont;j++){
-        //printf("parr[%d]: %d  temp2[%d]: %d\n",j,*parr[j],j,temp2[j]);
-    } */
-
-    //al final, cuando necesite que los parámetros queden en el heap debo hacer lo sig:
-    //  *len = 256;
-    //  char *ope = create_array(8);
-    //  *op = ope;
-    
     destroy_array(buffer);
 }
 void feature5(FILE *fout, int *parr, int length, char *op){
@@ -197,8 +171,36 @@ void feature5(FILE *fout, int *parr, int length, char *op){
     //La operación puede ser avg, max, min correspondientes al promedio, máximo o mínimo. 
     //TODOS los resultados deben ser ENTEROS, NO en punto flotante.
 
-
-
+    unsigned int sumop = 0;
+    for(uint8_t i=0;i<3;i++){
+        sumop+=op[i];
+        //printf("sumop: %d\n",sumop);
+    }
+    if(sumop == 318){ //la operación es avg
+        int suma=0;
+        for(uint8_t i=0;i<length;i++){
+            suma+=parr[i];
+        }
+        int avg = suma/length;
+        fprintf(fout,"\n");
+        fprintf(fout,"%d",avg);
+    }
+    if(sumop == 326){ //la op es max
+        int max = 0;
+        for(uint8_t i=0;i<length;i++){
+            if(parr[i]>max) max = parr[i];
+        }
+        fprintf(fout,"\n");
+        fprintf(fout,"%d",max);
+    }
+    if(sumop == 324){ //la op es min
+        int min = 99999;
+         for(uint8_t i=0;i<length;i++){
+            if(parr[i]<min) min = parr[i];
+        }
+        fprintf(fout,"\n");
+        fprintf(fout,"%d",min);
+    }
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
