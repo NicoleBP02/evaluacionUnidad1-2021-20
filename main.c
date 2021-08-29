@@ -52,5 +52,7 @@ int main(int argc, char *argv[]){
     int length;
     feature8(inFile, &pobj2, &length);
     
+    feature9(outFile,pobj2,length);
+    
     return EXIT_SUCCESS;
 }

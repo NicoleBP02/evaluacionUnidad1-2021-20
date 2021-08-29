@@ -11,6 +11,7 @@ void feature5(FILE *fout, int *parr, int length, char *op);
 void feature6(FILE *fin, struct Obj_t *pobj);
 void feature7(FILE *fout, struct Obj_t *pobj);
 void feature8(FILE *fin, struct _courseInfo_t **pobj,int *length);
+void feature9(FILE *fout, struct _courseInfo_t *pobj,int length);
 char *create_array(int);
 int *create_intarray(int size);
 void destroy_array(char *);
@@ -249,17 +250,48 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
     //al usuario ingresar el nombre del curso, los créditos y la nota
     int size_buffer = 16;
     int cursos;
-    char *buffer = create_array(size_buffer);
+    char *buffer = create_array(size_buffer); //leo linea
     fgets(buffer,size_buffer,inFile);
-    for(int j=0;j<size_buffer;j++){
+    for(int j=0;j<size_buffer;j++){ //encuentro LENGTH
         buffer[j]-=48;
         if(buffer[j] > 0 && buffer[j] < 10){
             cursos = buffer[j];
-            printf("buffer[%d]: %d\n",j,buffer[j]);
         } else break;
     }
     *length = cursos; 
-    printf("length: %d\n", *length);
+
+    char *token;
+    struct _courseInfo_t arrObj[cursos]; //creo arreglo de objetos
+    for(uint8_t i=0;i<cursos;i++){
+        struct _courseInfo_t courseObj; //creo objeto
+        char *linea;  
+        printf("Ingrese el curso %d: curso(sin espacios),créditos,nota\n",i+1); //leo linea
+        scanf("%s", linea);
+        if(linea == NULL) EXIT_FAILURE;
+        //printf("linea: %s\n",linea);
+
+        //lleno objeto con datos de linea
+        char *tok_curso;
+        tok_curso = strtok(linea, ",");
+        courseObj.name = tok_curso;
+        //printf("curso:%s\n",courseObj.name);
+
+        char *tok_creditos = strtok(NULL, ",");
+        courseObj.credits = atoi(tok_creditos);
+        //printf("creditos:%d\n",courseObj.credits);
+
+        char *tok_nota= strtok(NULL, "");
+        courseObj.grade = (float)atoi(tok_nota);
+        //printf("nota:%f\n",courseObj.grade);
+
+        arrObj[i] = courseObj;
+    }
+    *pobj = arrObj;
+}
+void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
+    //feature9: finalmente, calcula el promedio ponderado del semestre. 
+    //Pregunta al usuario si desea almacenar la información la información en el archivo de salida 
+    
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
