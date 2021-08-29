@@ -262,8 +262,10 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
 
     char *token;
     struct _courseInfo_t arrObj[cursos]; //creo arreglo de objetos
+    struct _courseInfo_t courseObj; //creo objeto
+    arrObj[0] = courseObj;
     for(uint8_t i=0;i<cursos;i++){
-        struct _courseInfo_t courseObj; //creo objeto
+        //printf("i: %d\n",i);
         char *linea;  
         printf("Ingrese el curso %d: curso(sin espacios),créditos,nota\n",i+1); //leo linea
         scanf("%s", linea);
@@ -281,17 +283,26 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
         //printf("creditos:%d\n",courseObj.credits);
 
         char *tok_nota= strtok(NULL, "");
-        courseObj.grade = (float)atoi(tok_nota);
+        courseObj.grade = atof(tok_nota);
         //printf("nota:%f\n",courseObj.grade);
 
         arrObj[i] = courseObj;
     }
-    *pobj = arrObj;
+    
+    //*pobj = arrObj;
+    printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade);
+    printf("arrObj[1]: %s, %d, %f\n",arrObj[1].name,arrObj[1].credits,arrObj[1].grade);
+    printf("arrObj[2]: %s, %d, %f\n",arrObj[2].name,arrObj[2].credits,arrObj[2].grade);
+    for(uint j=0;j<cursos;j++){
+        //printf("%d: %s,%d,%f\n",j,pobj[j]->name,pobj[j]->credits,pobj[j]->grade);
+    }
 }
 void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
     //feature9: finalmente, calcula el promedio ponderado del semestre. 
     //Pregunta al usuario si desea almacenar la información la información en el archivo de salida 
-    
+
+    //printf("pobj[0].credits: %d\n",pobj[0].credits);
+    //printf("pobj[1].credits: %d\n",pobj[1].credits);
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
