@@ -34,8 +34,9 @@ int main(int argc, char *argv[]){
     int *parr = NULL;
     char *op = NULL;
     feature4(inFile, &parr, &len, &op);
-    //printf("len: %d\n", len);
-    //for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
-    //for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);
+    /*printf("len: %d\n", len);
+    for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
+    for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);*/
+    feature5(outFile, parr, len, op);
     return EXIT_SUCCESS;
 }

@@ -132,32 +132,26 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
         inv--;
     }
     //PARA ENCONTRAR PARR Y LEN
+    int *arr = create_intarray(size_buffer);
+    char *token;
+    token = strtok(buffer, " ");
+    if(token == NULL) EXIT_FAILURE;
+    arr[0] = atoi(token);
     uint8_t n = 0;
-    signed char *arr = create_array(size_buffer);
-    for(uint8_t j=0;j<size_buffer-1;j++) buffer[j] -= 48; //paso los numeros de ASCII a decimal 
-    for(uint8_t j=0;j<size_buffer-1;j++) arr[j] = 0; //lleno todo de ceros para evitar nums raros al final
-    for(uint8_t j=0;j<size_buffer-1;j++){
-        if(buffer[j]>-16){
-            if(buffer[j]==-3){ //si es negativo
-                buffer[j+1] = buffer[j+1]*(-1);
-                if(buffer[j+2]!=-16){ //si es de dos dígitos
-                   buffer[j+2] = (buffer[j+1]*-10) + buffer[j+2]; 
-                   arr[n] = buffer[j+2]*-1;
-                   j+=2;
-                }
-                else{
-                    arr[n] = buffer[j+1]; //si es de un dígito
-                    n--;
-                } 
-            }else arr[n] = buffer[j]; //si es positivo
-            if(buffer[j+1]!=-16) buffer[j+1] += buffer[j]*10; //si es positivo de dos digitos
-        } else n++;
+    while(token != NULL){
+        if(token!=NULL){
+            arr[n] = atoi(token);
+            //printf("arr[%d]: %d\n",n,arr[n]);
+        }else break;  
+        token = strtok(NULL, " "); 
+        n++;
     }
     uint8_t cont = 0;
     for(uint8_t j=0;j<size_buffer-1;j++){ //ciclo para conocer len
         if(arr[j] == 0) break;
         cont++; //LEN
     }
+    printf("cont: %d\n", cont);
     int *temp2 = create_intarray(cont); //PARR
     for(uint8_t j=0;j<cont;j++){
         temp2[j] = (int)arr[j];
