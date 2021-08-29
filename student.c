@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include "student.h"
 
 void feature1(FILE *inFile, FILE *outFile);
 int feature2(FILE *inFile, FILE *outFile);
-int feature3(FILE *inFile, FILE *outFile);
+void feature3(FILE *inFile, FILE *outFile);
 void feature4(FILE *inFile, int **parr, int *length, char **op);
 void feature5(FILE *fout, int *parr, int length, char *op);
 char *create_array(int);
@@ -58,47 +59,39 @@ int feature2(FILE *inFile, FILE *outFile){
     destroy_array(invertido);
     return EXIT_SUCCESS;
 }
-int feature3(FILE *inFile, FILE *outFile){
+void feature3(FILE *inFile, FILE *outFile){
     //Feature3: lee el arreglo de enteros de la tercera línea del archivo de entrada, 
     //calcula la suma y almacena el resultado en la tercera línea del archivo de salida.
     uint8_t size = 160;
-    char *nums = create_array(size);
+    char *buffer = create_array(size);
     uint8_t data = 0;
     uint8_t lfcount = 0;
     uint8_t i = 0;
     while((data = fgetc(inFile)) != EOF){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break; 
-        nums[i] = data-48;
-        //printf("nums[%d]: %d\n",i,nums[i]);
+        buffer[i] = data;
+        //printf("buffer[%d]: %d\n",i,buffer[i]);
         i++;
     }
-    signed char *aux = create_array(size);
-    uint8_t k = 0;
-    for(uint8_t j = 0; j < i;j++){
-        if(nums[j]>-16){
-            if(nums[j]==-3){
-                nums[j+1] = nums[j+1]*(-1);
-                if(nums[j+2]!=-16){
-                   nums[j+2] = (nums[j+1]*-10) + nums[j+2]; 
-                   aux[k] = nums[j+2]*-1;
-                   j+=2;
-                } else aux[k] = nums[j+1];
-            }
-            else aux[k] = nums[j];
-            if(nums[j+1]!=-16) nums[j+1] += nums[j]*10;
-        } else k++;
+    //recorrer buffer para quitar chars extraños
+    for(uint8_t j=0; j<size;j++){
+        if(buffer[j] > 58 || buffer[j] < 32) buffer[j] = 0;
     }
-    signed int suma = 0;
-    for(uint8_t j = 0; j < i;j++){
-        suma+=aux[j];
-        aux[j] = 0;
+    char *token;
+    int suma = 0;
+    token = strtok(buffer, " ");
+    if(token == NULL) EXIT_FAILURE;
+    suma += atoi(token);
+    while(token != NULL){
+        token = strtok(NULL, " ");
+        if(token==NULL) break;
+        suma += atoi(token);
     }
+    //printf("suma %d\n",suma);
     fprintf(outFile, "\n");
     fprintf(outFile, "%d",suma);
-    destroy_array(nums);
-    destroy_array(aux);
-    return EXIT_SUCCESS;
+    destroy_array(buffer);
 }
 void feature4(FILE *inFile, int **parr, int *length, char **op){
     //feature4: lee el arreglo de enteros de la cuarta línea del archivo de entrada 
