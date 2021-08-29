@@ -51,8 +51,9 @@ int main(int argc, char *argv[]){
     struct _courseInfo_t *pobj2; 
     int length;
     feature8(inFile, &pobj2, &length);
-    
     feature9(outFile,pobj2,length);
     
+    fclose(inFile);
+    fclose(outFile); 
     return EXIT_SUCCESS;
 }

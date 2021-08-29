@@ -163,9 +163,9 @@ void feature4(FILE *inFile, int **parr, int *length, char **op){
 
     //  IMPORTANTE!!!! 
     
-    *length = cont; //this works
-    *op = temp; //this doesn't
-    *parr = temp2; //this doesn't
+    *length = cont; 
+    *op = temp; 
+    *parr = temp2; 
 
     destroy_array(buffer);
 }
@@ -289,20 +289,15 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
         arrObj[i] = courseObj;
     }
     
-    //*pobj = arrObj;
-    printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade);
+    *pobj = arrObj; 
+    /*printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade);
     printf("arrObj[1]: %s, %d, %f\n",arrObj[1].name,arrObj[1].credits,arrObj[1].grade);
-    printf("arrObj[2]: %s, %d, %f\n",arrObj[2].name,arrObj[2].credits,arrObj[2].grade);
-    for(uint j=0;j<cursos;j++){
-        //printf("%d: %s,%d,%f\n",j,pobj[j]->name,pobj[j]->credits,pobj[j]->grade);
-    }
+    printf("arrObj[2]: %s, %d, %f\n",arrObj[2].name,arrObj[2].credits,arrObj[2].grade);*/
+
 }
 void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
     //feature9: finalmente, calcula el promedio ponderado del semestre. 
     //Pregunta al usuario si desea almacenar la información la información en el archivo de salida 
-
-    //printf("pobj[0].credits: %d\n",pobj[0].credits);
-    //printf("pobj[1].credits: %d\n",pobj[1].credits);
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
