@@ -40,7 +40,8 @@ int main(int argc, char *argv[]){
     feature5(outFile, parr, len, op);
     struct Obj_t pobj;
     feature6(inFile, &pobj);
-    printf("nombre: %s\n",pobj.nombre);
-    printf("cedula: %d\n",pobj.cedula);
+    //printf("nombre: %s\n",pobj.nombre);
+    //printf("cedula: %d\n",pobj.cedula);
+    feature7(inFile, &pobj);
     return EXIT_SUCCESS;
 }

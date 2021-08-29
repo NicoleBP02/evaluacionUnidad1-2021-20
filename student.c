@@ -9,6 +9,7 @@ void feature3(FILE *inFile, FILE *outFile);
 void feature4(FILE *inFile, int **parr, int *length, char **op);
 void feature5(FILE *fout, int *parr, int length, char *op);
 void feature6(FILE *fin, struct Obj_t *pobj);
+void feature7(FILE *fout, struct Obj_t *pobj);
 char *create_array(int);
 int *create_intarray(int size);
 void destroy_array(char *);
@@ -230,6 +231,19 @@ void feature6(FILE *inFile, struct Obj_t *pobj){
     pobj->cedula=cedula;
     //printf("nombre: %s\n",pobj->nombre);
     //printf("cedula: %d\n",pobj->cedula);
+
+}
+void feature7(FILE *fout, struct Obj_t *pobj){
+    //feature7: recibe la dirección en memoria de la estructura anterior y 
+    //la guarda en la quinta línea del archivo de salida primero la cédula, 
+    //seguido por una coma y finalizando con el nombre. 
+    printf("Nombre: %s\n", pobj->nombre);
+    printf("Cedula: %d\n", pobj->cedula);
+    fprintf(fout, "\n");
+    fprintf(fout, "%d",pobj->cedula);
+    fprintf(fout, ", ");
+    fprintf(fout, "%s",pobj->nombre);
+   
 
 }
 char *create_array(int size){
