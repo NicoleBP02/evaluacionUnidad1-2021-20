@@ -8,6 +8,7 @@ int feature2(FILE *inFile, FILE *outFile);
 void feature3(FILE *inFile, FILE *outFile);
 void feature4(FILE *inFile, int **parr, int *length, char **op);
 void feature5(FILE *fout, int *parr, int length, char *op);
+void feature6(FILE *fin, struct Obj_t *pobj);
 char *create_array(int);
 int *create_intarray(int size);
 void destroy_array(char *);
@@ -174,7 +175,6 @@ void feature5(FILE *fout, int *parr, int length, char *op){
     unsigned int sumop = 0;
     for(uint8_t i=0;i<3;i++){
         sumop+=op[i];
-        //printf("sumop: %d\n",sumop);
     }
     if(sumop == 318){ //la operación es avg
         int suma=0;
@@ -201,6 +201,36 @@ void feature5(FILE *fout, int *parr, int length, char *op){
         fprintf(fout,"\n");
         fprintf(fout,"%d",min);
     }
+}
+void feature6(FILE *inFile, struct Obj_t *pobj){
+    //feature6: lee la quinta línea del archivo de entrada y con esta información 
+    //debes configurar los valores de la siguiente estructura de datos cuya dirección 
+    //se pasará a la función.
+
+    uint8_t size = 160;
+    char *buffer = create_array(size);
+    uint8_t data = 0;
+    uint8_t lfcount = 0;
+    uint8_t i = 0;
+    while((data = fgetc(inFile)) != EOF){
+        if(data == 10) lfcount++; 
+        if(lfcount >= 1) break; 
+        buffer[i] = data;
+        //printf("buffer[%d]: %d\n",i,buffer[i]);
+        i++;
+    }
+    char *token;
+    token = strtok(buffer, ",");
+    if(token == NULL) EXIT_FAILURE;
+    char *nombre = token;
+    char *token2 = strtok(NULL, "");
+    int cedula = atoi(token2);
+
+    pobj->nombre=nombre; 
+    pobj->cedula=cedula;
+    //printf("nombre: %s\n",pobj->nombre);
+    //printf("cedula: %d\n",pobj->cedula);
+
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );

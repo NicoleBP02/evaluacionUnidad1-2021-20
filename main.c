@@ -38,5 +38,9 @@ int main(int argc, char *argv[]){
     for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
     for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);*/
     feature5(outFile, parr, len, op);
+    struct Obj_t pobj;
+    feature6(inFile, &pobj);
+    printf("nombre: %s\n",pobj.nombre);
+    printf("cedula: %d\n",pobj.cedula);
     return EXIT_SUCCESS;
 }
