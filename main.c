@@ -30,6 +30,7 @@ int main(int argc, char *argv[]){
     feature1(inFile, outFile);
     feature2(inFile, outFile);
     feature3(inFile, outFile);  
+
     int len = 0; 
     int *parr = NULL;
     char *op = NULL;
@@ -37,11 +38,19 @@ int main(int argc, char *argv[]){
     /*printf("len: %d\n", len);
     for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
     for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);*/
+
     feature5(outFile, parr, len, op);
+
     struct Obj_t pobj;
     feature6(inFile, &pobj);
     //printf("nombre: %s\n",pobj.nombre);
     //printf("cedula: %d\n",pobj.cedula);
+   
     feature7(outFile, &pobj);
+
+    struct _courseInfo_t *pobj2; 
+    int length;
+    feature8(inFile, &pobj2, &length);
+    
     return EXIT_SUCCESS;
 }

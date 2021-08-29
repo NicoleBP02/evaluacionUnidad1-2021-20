@@ -10,6 +10,7 @@ void feature4(FILE *inFile, int **parr, int *length, char **op);
 void feature5(FILE *fout, int *parr, int length, char *op);
 void feature6(FILE *fin, struct Obj_t *pobj);
 void feature7(FILE *fout, struct Obj_t *pobj);
+void feature8(FILE *fin, struct _courseInfo_t **pobj,int *length);
 char *create_array(int);
 int *create_intarray(int size);
 void destroy_array(char *);
@@ -217,7 +218,6 @@ void feature6(FILE *inFile, struct Obj_t *pobj){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break; 
         buffer[i] = data;
-        //printf("buffer[%d]: %d\n",i,buffer[i]);
         i++;
     }
     char *token;
@@ -237,13 +237,29 @@ void feature7(FILE *fout, struct Obj_t *pobj){
     //feature7: recibe la dirección en memoria de la estructura anterior y 
     //la guarda en la quinta línea del archivo de salida primero la cédula, 
     //seguido por una coma y finalizando con el nombre. 
-    printf("Nombre: %s\n", pobj->nombre);
-    printf("Cedula: %d\n", pobj->cedula);
     fprintf(fout, "\n");
     fprintf(fout, "%d",pobj->cedula);
     fprintf(fout, ", ");
     fprintf(fout, "%s",pobj->nombre);
 
+}
+void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
+    //feature8: lee la sexta línea del archivo de entrada que contiene un número entero positivo 
+    //que especifica la cantidad de cursos que un estudiante cursó en un semestre. Luego solicita 
+    //al usuario ingresar el nombre del curso, los créditos y la nota
+    int size_buffer = 16;
+    int cursos;
+    char *buffer = create_array(size_buffer);
+    fgets(buffer,size_buffer,inFile);
+    for(int j=0;j<size_buffer;j++){
+        buffer[j]-=48;
+        if(buffer[j] > 0 && buffer[j] < 10){
+            cursos = buffer[j];
+            printf("buffer[%d]: %d\n",j,buffer[j]);
+        } else break;
+    }
+    *length = cursos; 
+    printf("length: %d\n", *length);
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
