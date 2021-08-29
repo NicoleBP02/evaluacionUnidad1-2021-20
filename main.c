@@ -42,6 +42,6 @@ int main(int argc, char *argv[]){
     feature6(inFile, &pobj);
     //printf("nombre: %s\n",pobj.nombre);
     //printf("cedula: %d\n",pobj.cedula);
-    feature7(inFile, &pobj);
+    feature7(outFile, &pobj);
     return EXIT_SUCCESS;
 }

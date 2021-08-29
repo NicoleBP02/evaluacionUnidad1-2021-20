@@ -243,7 +243,6 @@ void feature7(FILE *fout, struct Obj_t *pobj){
     fprintf(fout, "%d",pobj->cedula);
     fprintf(fout, ", ");
     fprintf(fout, "%s",pobj->nombre);
-   
 
 }
 char *create_array(int size){
