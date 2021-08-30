@@ -310,10 +310,27 @@ void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
     printf("creditos: %d\n", sum_cred);
     printf("prom: %f\n",prom);*/
 
-    /*char linea[32];  
-    printf("Ingrese el curso %d: curso(sin espacios),créditos,nota\n",i+1); //leo linea
+    char linea[32];  
+    printf("deseas almacenar la informacion (s) o (n)\n"); //leo linea
     scanf("%s", linea);
-    if(linea == NULL) EXIT_FAILURE;*/
+    if(linea == NULL) EXIT_FAILURE;
+    //printf("linea: %s",linea);
+    if(linea[0] == 115 || linea[0] == 83){
+        for(uint8_t i=0;i<length;i++){
+            fprintf(fout, "\n");
+            fprintf(fout, "%s",pobj[i].name);
+            fprintf(fout, ", ");
+            fprintf(fout, "%d",pobj[i].credits);
+            fprintf(fout, ", ");
+            fprintf(fout, "%f",pobj[i].grade);
+        }
+        fprintf(fout,"\n");
+        fprintf(fout,"El promedio ponderado es: %f", prom);
+    }
+    else{
+        fprintf(fout,"\n");
+        fprintf(fout,"%f",prom);
+    }
 }
 char *create_array(int size){
     return (char * ) malloc(sizeof(int)* size );
