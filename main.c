@@ -35,13 +35,13 @@ int main(int argc, char *argv[]){
     int *parr = NULL;
     char *op = NULL;
     feature4(inFile, &parr, &len, &op);
-    printf("len: %d\n", len);
+    /*printf("len: %d\n", len);
     for(uint8_t j=0;j<strlen(op);j++) printf("op[%d]: %c\n",j, op[j]);
-    for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);
+    for(uint8_t j=0;j<len;j++) printf("parr[%d]: %d\n",j, parr[j]);*/
 
     feature5(outFile, parr, len, op);
 
-    /*struct Obj_t pobj;
+    struct Obj_t pobj;
     feature6(inFile, &pobj);
     //printf("nombre: %s\n",pobj.nombre);
     //printf("cedula: %d\n",pobj.cedula);
@@ -51,9 +51,10 @@ int main(int argc, char *argv[]){
     struct _courseInfo_t *pobj2; 
     int length;
     feature8(inFile, &pobj2, &length);
+    //printf("pobj[0]: %s,%d,%f\n",pobj2[0].name,pobj2[0].credits,pobj2[0].grade);
     feature9(outFile,pobj2,length);
 
-    fclose(inFile);
-    fclose(outFile); */
+    //fclose(inFile);
+    //fclose(outFile); 
     return EXIT_SUCCESS;
 }
