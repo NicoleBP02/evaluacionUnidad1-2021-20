@@ -286,9 +286,9 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
         arrObj[i] = courseObj;
     }
     
-    *pobj = arrObj; 
-    //printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade);
-    //printf("arrObj[1]: %s, %d, %f\n",arrObj[1].name,arrObj[1].credits,arrObj[1].grade);
+    *pobj = arrObj;  
+    /*printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade); //PRUEBA
+    printf("arrObj[1]: %s, %d, %f\n",arrObj[1].name,arrObj[1].credits,arrObj[1].grade);*/
 }
 void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
     //feature9: finalmente, calcula el promedio ponderado del semestre. 
@@ -301,7 +301,7 @@ void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
         float nota = pobj[i].grade;
         int creditos = pobj[i].credits;
         pond = pond + (nota*creditos);
-        printf("pond: %f\n",pond);
+        //printf("pond: %f\n",pond);
         sum_cred = sum_cred + creditos;
     }
     float prom = pond/sum_cred;
