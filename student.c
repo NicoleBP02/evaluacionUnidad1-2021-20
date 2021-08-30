@@ -275,7 +275,8 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
         //lleno objeto con datos de linea
         char *tok_curso;
         tok_curso = strtok(linea, ",");
-        courseObj.name = tok_curso;
+        //strcpy(courseObj.name,tok_curso);
+        
         //printf("curso:%s\n",courseObj.name);
 
         char *tok_creditos = strtok(NULL, ",");
@@ -293,7 +294,6 @@ void feature8(FILE *inFile, struct _courseInfo_t **pobj,int *length){
     /*printf("arrObj[0]: %s, %d, %f\n",arrObj[0].name,arrObj[0].credits,arrObj[0].grade);
     printf("arrObj[1]: %s, %d, %f\n",arrObj[1].name,arrObj[1].credits,arrObj[1].grade);
     printf("arrObj[2]: %s, %d, %f\n",arrObj[2].name,arrObj[2].credits,arrObj[2].grade);*/
-
 }
 void feature9(FILE *fout, struct _courseInfo_t *pobj,int length){
     //feature9: finalmente, calcula el promedio ponderado del semestre. 
@@ -309,5 +309,5 @@ void destroy_array(char *this){
     free(this);
 }
 void destroy_intarray(int *this){
-    free(this);
+    free(this); 
 }

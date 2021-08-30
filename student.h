@@ -9,7 +9,7 @@ struct Obj_t{
 };
 
 struct _courseInfo_t{
-    char *name;
+    char name[32];
     int credits;
     float grade;
 };
