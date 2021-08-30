@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
     int length;
     feature8(inFile, &pobj2, &length);
     //printf("pobj[0]: %s,%d,%f\n",pobj2[0].name,pobj2[0].credits,pobj2[0].grade);
-    //feature9(outFile,pobj2,length);
+    feature9(outFile,pobj2,length);
 
     fclose(inFile);
     fclose(outFile); 
