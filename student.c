@@ -4,7 +4,7 @@
 #include "student.h"
 
 void feature1(FILE *inFile, FILE *outFile);
-int feature2(FILE *inFile, FILE *outFile);
+void feature2(FILE *inFile, FILE *outFile);
 void feature3(FILE *inFile, FILE *outFile);
 void feature4(FILE *inFile, int **parr, int *length, char **op);
 void feature5(FILE *fout, int *parr, int length, char *op);
@@ -30,13 +30,13 @@ void feature1(FILE *inFile, FILE *outFile){
         else break; 
     }
 }
-int feature2(FILE *inFile, FILE *outFile){
+void feature2(FILE *inFile, FILE *outFile){
      //Feature2: lee la segunda línea del archivo de entrada, invierte su orden 
     //y la escribe en la segunda línea del archivo de salida.
 
     //reservo espacio en mem para buffer que contendrá data
     char *buffer = create_array(300); //lo que podía ocupar en bytes una línea llena 
-    if(buffer == NULL) return EXIT_FAILURE;
+    if(buffer == NULL) return;
 
     buffer[0] = 10; //enter... para que comienze en la 2da línea
     uint8_t data = 0;
@@ -61,7 +61,6 @@ int feature2(FILE *inFile, FILE *outFile){
     }
     destroy_array(buffer);
     destroy_array(invertido);
-    return EXIT_SUCCESS;
 }
 void feature3(FILE *inFile, FILE *outFile){
     //Feature3: lee el arreglo de enteros de la tercera línea del archivo de entrada, 
