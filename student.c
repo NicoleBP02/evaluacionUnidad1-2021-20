@@ -218,7 +218,11 @@ void feature6(FILE *inFile, struct Obj_t *pobj){
         if(data == 10) lfcount++; 
         if(lfcount >= 1) break; 
         buffer[i] = data;
+        //printf("buffer[%d]: %d\n",i,data);
         i++;
+    }
+    for(uint8_t j=size;j>=i;j--){ //quitar chars raros al final
+        buffer[j] = 0;
     }
     char *token;
     token = strtok(buffer, ",");
